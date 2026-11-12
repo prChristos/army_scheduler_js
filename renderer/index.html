@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Army Scheduler</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="no-print"><h1>Σύστημα Έκδοσης Υπηρεσιών Λόχου</h1></header>
+
+  <nav class="tabs no-print" role="tablist">
+    <button class="tab active" data-tab="soldiers" role="tab">Στρατιώτες</button>
+    <button class="tab" data-tab="leaves" role="tab">Άδειες / Κωλύματα</button>
+    <button class="tab" data-tab="schedule" role="tab">Πλάνο Υπηρεσιών</button>
+  </nav>
+
+  <main>
+    <section id="tab-soldiers" class="panel active no-print-panel">
+      <h2>Διαχείριση Δύναμης Λόχου</h2>
+      <form id="soldier-form" class="row">
+        <label>ΑΣΜ<input name="asm" class="w-sm" autocomplete="off"></label>
+        <label>Επώνυμο<input name="eponymo" autocomplete="off"></label>
+        <label>Όνομα<input name="onoma" autocomplete="off"></label>
+        <label>Ικανότητα<select name="ikanotita"></select></label>
+        <label>Πόστο<select name="posto"></select></label>
+        <label>Μονάδα<select name="monada"></select></label>
+        <button type="submit" class="btn primary">Προσθήκη</button>
+      </form>
+      <div id="soldiers-table"></div>
+    </section>
+
+    <section id="tab-leaves" class="panel">
+      <h2>Καταχώρηση Αδειών &amp; Κωλυμάτων</h2>
+      <form id="leave-form" class="row">
+        <label class="grow">Επιλογή Στρατιώτη<select name="asm" id="leave-soldier"></select></label>
+        <label>Από<input type="date" name="start"></label>
+        <label>Έως<input type="date" name="end"></label>
+        <label>Τύπος
+          <select name="type">
+            <option value="ΑΔΕΙΑ">Κανονική Άδεια</option>
+            <option value="ΕΛΕΥΘΕΡΟΣ">Ελεύθερος Υπηρεσίας (Κώλυμα)</option>
+          </select>
+        </label>
+        <button type="submit" class="btn primary">Καταχώρηση</button>
+      </form>
+      <h3>Λίστα Καταχωρημένων Αδειών / Κωλυμάτων</h3>
+      <div id="leaves-table"></div>
+    </section>
+
+    <section id="tab-schedule" class="panel">
+      <div class="row no-print">
+        <strong>Διαχείριση:</strong>
+        <label>Έτος<input id="sch-year" class="w-sm" inputmode="numeric"></label>
+        <label>Μήνας<input id="sch-month" class="w-xs" inputmode="numeric"></label>
+        <label>Από Ημέρα<input id="sch-day" class="w-xs" inputmode="numeric" value="1"></label>
+        <button id="btn-generate" class="btn success">Έκδοση</button>
+        <button id="btn-print" class="btn primary">Εκτύπωση</button>
+        <button id="btn-delete" class="btn danger">Διαγραφή Μήνα</button>
+        <button id="btn-view" class="btn">Προβολή</button>
+        <label class="grow">Προβολή Προγράμματος Μήνα<select id="history"></select></label>
+      </div>
+      <div id="schedule-view"></div>
+    </section>
+  </main>
+
+  <dialog id="edit-dialog">
+    <form id="edit-form" method="dialog">
+      <h3>Επεξεργασία Στοιχείων</h3>
+      <label>ΑΣΜ (Δεν αλλάζει)<input name="asm" disabled></label>
+      <label>Επώνυμο<input name="eponymo" autocomplete="off"></label>
+      <label>Όνομα<input name="onoma" autocomplete="off"></label>
+      <label>Στρατιωτική Ικανότητα<select name="ikanotita"></select></label>
+      <label>Πόστο<select name="posto"></select></label>
+      <label>Μονάδα<select name="monada"></select></label>
+      <div class="row end">
+        <button type="button" class="btn" id="edit-cancel">Ακύρωση</button>
+        <button type="submit" class="btn primary">Αποθήκευση</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="no-print" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
